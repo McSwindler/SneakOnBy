@@ -10,6 +10,8 @@ namespace SneakOnBy
         public int Version { get; set; } = 0;
 
         public bool EnableLineOfSight { get; set; } = true;
+        public bool EnableProximity { get; set; } = true;
+        public bool EnableSound { get; set; } = true;
 
         // the below exist just to make saving less cumbersome
         [NonSerialized]

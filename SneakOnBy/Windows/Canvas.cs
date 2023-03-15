@@ -2,24 +2,15 @@ using System;
 using System.Numerics;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
-using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Interface.GameFonts;
-using Dalamud.Game.ClientState;
 using ECommons.GameFunctions;
 using ECommons.DalamudServices;
 using Dalamud.Interface;
 using ECommons.MathHelpers;
-using FFXIVClientStructs.FFXIV.Client.Game.Control;
-using FFXIVClientStructs.FFXIV.Component.GUI;
-using Dalamud.Logging;
-using System.Buffers.Text;
-using FFXIVClientStructs.FFXIV.Client.System.Framework;
-using FFXIVClientStructs.FFXIV.Client.UI;
-using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility.Numerics;
+using Dalamud.Game.ClientState.Conditions;
 
 namespace SneakOnBy.Windows;
 
@@ -53,31 +44,37 @@ public class Canvas : Window
 
     public override bool DrawConditions()
     {
-        return Svc.ClientState.LocalPlayer != null;
+        return Svc.ClientState.LocalPlayer != null && Svc.Condition[ConditionFlag.InDeepDungeon];
     }
 
     public void Dispose() { }
 
     public override void Draw()
     {
-        if (this.configuration.EnableLineOfSight)
+        foreach (GameObject obj in Svc.Objects)
         {
-            foreach (GameObject obj in Svc.Objects)
-            {
-                if (obj is BattleNpc bnpc && bnpc.IsHostile() && !bnpc.StatusFlags.HasFlag(StatusFlags.InCombat) && bnpc.IsCharacterVisible()) {                    
-                    Aggro aggro = DeepDungeonDex.GetMobAggroType(bnpc.NameId);
-                    switch (aggro)
-                    {
-                        case Aggro.Sight:
+            if (obj is BattleNpc bnpc && bnpc.IsHostile() && !bnpc.StatusFlags.HasFlag(StatusFlags.InCombat) && bnpc.IsCharacterVisible()) {                    
+                Aggro aggro = DeepDungeonDex.GetMobAggroType(bnpc.NameId);
+                switch (aggro)
+                {
+                    case Aggro.Sight:
+                        if (this.configuration.EnableLineOfSight)
+                        {
                             ActorConeXZ(bnpc, bnpc.HitboxRadius + 10, Radians(-45), Radians(45), ImGuiColors.DalamudRed.WithW(0.2f));
-                            break;
-                        case Aggro.Proximity:
+                        }
+                        break;
+                    case Aggro.Proximity:
+                        if (this.configuration.EnableProximity)
+                        {
                             CircleArcXZ(bnpc.Position, bnpc.HitboxRadius + 10, 0f, TAU, ImGuiColors.DalamudRed.WithW(0.2f));
-                            break;
-                        case Aggro.Sound:
+                        }
+                        break;
+                    case Aggro.Sound:
+                        if (this.configuration.EnableSound)
+                        {
                             CircleArcXZ(bnpc.Position, bnpc.HitboxRadius + 10, 0f, TAU, ImGuiColors.DalamudOrange.WithW(0.2f));
-                            break;
-                    }
+                        }
+                        break;
                 }
             }
         }

@@ -21,10 +21,14 @@ namespace SneakOnBy
         internal static IDalamudPlugin Instance;
         internal static object StorageHandler; 
 
-        internal static void Init()
+        internal static Boolean TryConnect()
         {
-            Connect();
-            DalamudReflector.RegisterOnInstalledPluginsChangedEvents(Connect);
+            if (Instance == null || StorageHandler == null)
+            {
+                Connect();
+            }
+
+            return Instance != null && StorageHandler != null;
         }
 
         static void Connect()
@@ -72,7 +76,7 @@ namespace SneakOnBy
 
         public static Aggro GetMobAggroType(uint id)
         {
-            if(StorageHandler != null)
+            if(TryConnect())
             {
                 Type mobDataType = Assembly.GetAssembly(StorageHandler.GetType()).GetType("DeepDungeonDex.Storage.MobData");
                 MethodInfo getInstancesMethod = StorageHandler.GetType().GetMethod("GetInstances", new Type[] { }).MakeGenericMethod(new Type[] { mobDataType });

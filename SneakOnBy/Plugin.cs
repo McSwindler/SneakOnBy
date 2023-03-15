@@ -37,7 +37,7 @@ namespace SneakOnBy
             this.CommandManager = commandManager;
 
             ECommonsMain.Init(pluginInterface, this, Module.DalamudReflector, Module.ObjectFunctions);
-            DeepDungeonDex.Init();
+            DeepDungeonDex.TryConnect();
 
             this.Configuration = this.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
             this.Configuration.Initialize(this.PluginInterface);
@@ -62,6 +62,7 @@ namespace SneakOnBy
             this.PluginInterface.UiBuilder.Draw += DrawUI;
             this.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
             Svc.Condition.ConditionChange += ConditionChange;
+            
         }
 
         public void Dispose()
