@@ -6,7 +6,7 @@ Requires [DeepDungeonDex](https://github.com/wolfcomp/DeepDungeonDex) to be inst
 
 ## Usage
 
-Install with custom repo (coming soon).
+Install with custom repo `https://raw.githubusercontent.com/McSwindler/DalamudPlugins/main/repo.json`
 
 Use command `/sneaky` to configure options.
 
