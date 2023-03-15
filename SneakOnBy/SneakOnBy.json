@@ -1,8 +1,8 @@
 {
   "Author": "McSwindler",
   "Name": "Sneak On By",
-  "Punchline": "Telegraphs aggro ranges to allow for better sneaking.",
-  "Description": "Adds telegraphs to monster aggro ranges to allow easier sneaking past mobs without fighting. Most helpful in deep dungeons.",
+  "Punchline": "Shows areas of aggression in Deep Dungeons",
+  "Description": "Adds markers for the areas around a monster where it will detect you. Allows you to more easily sneak around pesky mosnters.",
   "InternalName": "sneakOnBy",
   "ApplicableVersion": "any",
   "Tags": [
