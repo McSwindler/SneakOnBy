@@ -11,6 +11,7 @@ using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility.Numerics;
 using Dalamud.Game.ClientState.Conditions;
+using Lumina.Excel.GeneratedSheets;
 
 namespace SneakOnBy.Windows;
 
@@ -60,19 +61,26 @@ public class Canvas : Window
                     case Aggro.Sight:
                         if (this.configuration.EnableLineOfSight)
                         {
-                            ActorConeXZ(bnpc, bnpc.HitboxRadius + 10, Radians(-45), Radians(45), ImGuiColors.DalamudRed.WithW(0.2f));
+                            ActorConeXZ(bnpc, bnpc.HitboxRadius + 10, Radians(-45), Radians(45), this.configuration.LineOfSightColor);
                         }
                         break;
                     case Aggro.Proximity:
                         if (this.configuration.EnableProximity)
                         {
-                            CircleArcXZ(bnpc.Position, bnpc.HitboxRadius + 10, 0f, TAU, ImGuiColors.DalamudRed.WithW(0.2f));
+                            CircleArcXZ(bnpc.Position, bnpc.HitboxRadius + 10, 0f, TAU, this.configuration.ProximityColor);
                         }
                         break;
                     case Aggro.Sound:
                         if (this.configuration.EnableSound)
                         {
-                            CircleArcXZ(bnpc.Position, bnpc.HitboxRadius + 10, 0f, TAU, ImGuiColors.DalamudOrange.WithW(0.2f));
+                            CircleArcXZ(bnpc.Position, bnpc.HitboxRadius + 10, 0f, TAU, this.configuration.SoundColor);
+                        }
+                        break;
+                    case Aggro.Undefined:
+                        if (this.configuration.EnableUnknown)
+                        {
+                            ActorConeXZ(bnpc, bnpc.HitboxRadius + 10, Radians(-45), Radians(45), this.configuration.UnknownColorFront);
+                            ActorConeXZ(bnpc, bnpc.HitboxRadius + 10, Radians(45), Radians(315), this.configuration.UnknownColorBack);
                         }
                         break;
                 }

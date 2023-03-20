@@ -28,7 +28,6 @@ namespace SneakOnBy
             this.CommandManager = commandManager;
 
             ECommonsMain.Init(pluginInterface, this, Module.DalamudReflector, Module.ObjectFunctions);
-            DeepDungeonDex.TryConnect();
 
             this.Configuration = this.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
             this.Configuration.Initialize(this.PluginInterface);
