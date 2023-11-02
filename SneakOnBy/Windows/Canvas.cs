@@ -3,15 +3,10 @@ using System.Numerics;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using Dalamud.Game.ClientState.Objects.Types;
-using ECommons.GameFunctions;
-using ECommons.DalamudServices;
-using Dalamud.Interface;
 using ECommons.MathHelpers;
 using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Interface.Colors;
-using Dalamud.Utility.Numerics;
 using Dalamud.Game.ClientState.Conditions;
-using Lumina.Excel.GeneratedSheets;
+using Dalamud.Interface.Utility;
 
 namespace SneakOnBy.Windows;
 
@@ -45,16 +40,16 @@ public class Canvas : Window
 
     public override bool DrawConditions()
     {
-        return Svc.ClientState.LocalPlayer != null && Svc.Condition[ConditionFlag.InDeepDungeon];
+        return Services.ClientState.LocalPlayer != null && Services.Condition[ConditionFlag.InDeepDungeon];
     }
 
     public void Dispose() { }
 
     public override void Draw()
     {
-        foreach (GameObject obj in Svc.Objects)
+        foreach (GameObject obj in Services.Objects)
         {
-            if (obj is BattleNpc bnpc && bnpc.IsHostile() && !bnpc.StatusFlags.HasFlag(StatusFlags.InCombat) && bnpc.IsCharacterVisible()) {                    
+            if (obj is BattleNpc bnpc && bnpc.StatusFlags.HasFlag(StatusFlags.Hostile) && !bnpc.StatusFlags.HasFlag(StatusFlags.InCombat)) {                    
                 Aggro aggro = DeepDungeonDex.GetMobAggroType(bnpc.NameId);
                 switch (aggro)
                 {
@@ -117,7 +112,7 @@ public class Canvas : Window
 
     internal static float GetAngle(GameObject bnpc)
     {
-        return (MathHelper.GetRelativeAngle(Svc.ClientState.LocalPlayer.Position, bnpc.Position) + bnpc.Rotation.RadToDeg()) % 360;
+        return (MathHelper.GetRelativeAngle(Services.ClientState.LocalPlayer.Position, bnpc.Position) + bnpc.Rotation.RadToDeg()) % 360;
     }
 
     internal static void ActorConeXZ(GameObject actor, float radius, float startRads, float endRads, Vector4 color, bool lines = true)

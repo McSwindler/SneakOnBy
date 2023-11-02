@@ -1,7 +1,5 @@
 using Dalamud.Logging;
 using Dalamud.Plugin;
-using ECommons.DalamudServices;
-using ECommons.ExcelServices;
 using ECommons.Reflection;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;

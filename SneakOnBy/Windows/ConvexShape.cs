@@ -1,4 +1,3 @@
-using ECommons.DalamudServices;
 using System.Numerics;
 using ImGuiNET;
 using System;
@@ -26,7 +25,7 @@ internal class ConvexShape
         // TODO: implement proper clipping. everything goes crazy when
         // drawing lines outside the clip window and behind the camera
         // point
-        var visible = Svc.GameGui.WorldToScreen(worldPos, out Vector2 pos);
+        var visible = Services.GameGui.WorldToScreen(worldPos, out Vector2 pos);
         DrawList.PathLineTo(pos);
         if (visible) { cullObject = false; }
     }
