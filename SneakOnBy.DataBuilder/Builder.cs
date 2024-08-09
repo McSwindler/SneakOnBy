@@ -61,7 +61,7 @@ namespace SneakOnBy.DataBuilder
                             var uniqueId = $"{m.Groups[1].Captures[0].Value}_{m.Groups[2].Captures[0].Value}_{npc.Key}";
                             if(bnpcAgro.ContainsKey(uniqueId) && !bnpcAgro[uniqueId].Equals(agro))
                             {
-                                System.Console.WriteLine($"Found duplicate {name} with different agro types.");
+                                System.Console.WriteLine($"Found duplicate {uniqueId} {name} with different agro types.");
                             }
                             else if(!bnpcAgro.ContainsKey(uniqueId))
                             {
