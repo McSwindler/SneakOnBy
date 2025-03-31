@@ -1,0 +1,26 @@
+[
+  {
+        "Author":"McSwindler",
+        "Name":"Sneak On By",
+        "Description":"Adds markers for the areas around a monster where it will detect you. Allows you to more easily sneak around pesky mosnters.",
+        "InternalName":"SneakOnBy",
+        "AssemblyVersion":"1.0.0.0",
+        "RepoUrl":"https://github.com/McSwindler/SneakOnBy",
+        "IconUrl":"https://raw.githubusercontent.com/McSwindler/DalamudPlugins/main/icons/sneakonby.png",
+        "ApplicableVersion":"any",
+        "Tags":[
+            "deep-dungeon",
+            "sneak",
+            "aggro"
+        ],
+        "DalamudApiLevel":12,
+        "LoadPriority":-1,
+        "IsHide":"False",
+        "IsTestingExclusive":"False",
+        "LastUpdated":0,
+        "DownloadCount":0,
+        "DownloadLinkInstall":"https://github.com/McSwindler/SneakOnBy/releases/download/v1.0.0.0/SneakOnBy.zip",
+        "DownloadLinkTesting":"https://github.com/McSwindler/SneakOnBy/releases/download/v1.0.0.0/SneakOnBy.zip",
+        "DownloadLinkUpdate":"https://github.com/McSwindler/SneakOnBy/releases/download/v1.0.0.0/SneakOnBy.zip"
+    }
+]

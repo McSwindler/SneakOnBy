@@ -7,6 +7,11 @@ using ECommons.MathHelpers;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Interface.Utility;
+using static SneakOnBy.Storage.StorageManager;
+using Lumina.Excel.Sheets;
+using SneakOnBy.Utility;
+using SneakOnBy.Storage;
+using System.Linq;
 
 namespace SneakOnBy.Windows;
 
@@ -40,17 +45,18 @@ public class Canvas : Window
 
     public override bool DrawConditions()
     {
-        return Services.ClientState.LocalPlayer != null && Services.Condition[ConditionFlag.InDeepDungeon];
+        return Services.ClientState.LocalPlayer != null && Services.Condition[ConditionFlag.InDeepDungeon] && Plugin.StorageManager.DataReady;
     }
 
     public void Dispose() { }
 
     public override void Draw()
     {
-        foreach (GameObject obj in Services.Objects)
+        foreach (IGameObject obj in Services.Objects)
         {
-            if (obj is BattleNpc bnpc && bnpc.StatusFlags.HasFlag(StatusFlags.Hostile) && !bnpc.StatusFlags.HasFlag(StatusFlags.InCombat)) {                    
-                Aggro aggro = DeepDungeonDex.GetMobAggroType(bnpc.NameId);
+            if (obj is IBattleNpc bnpc && bnpc.StatusFlags.HasFlag(StatusFlags.Hostile) && !bnpc.StatusFlags.HasFlag(StatusFlags.InCombat)) {  
+                string? uniqueId = DeepDungeonUtil.GetUniqueBattleNpcId(bnpc.NameId);
+                Aggro aggro = uniqueId != null && Plugin.StorageManager.Enemies.ContainsKey(uniqueId) ? Plugin.StorageManager.Enemies[uniqueId] : Aggro.Undefined;
                 switch (aggro)
                 {
                     case Aggro.Sight:
@@ -89,7 +95,7 @@ public class Canvas : Window
         ImGui.PopStyleVar();
     }
 
-    internal static CardinalDirection GetDirection(GameObject bnpc)
+    internal static CardinalDirection GetDirection(IGameObject bnpc)
     {
         return MathHelper.GetCardinalDirection(GetAngle(bnpc));
     }
@@ -110,12 +116,12 @@ public class Canvas : Window
         return (default, default);
     }
 
-    internal static float GetAngle(GameObject bnpc)
+    internal static float GetAngle(IGameObject bnpc)
     {
         return (MathHelper.GetRelativeAngle(Services.ClientState.LocalPlayer.Position, bnpc.Position) + bnpc.Rotation.RadToDeg()) % 360;
     }
 
-    internal static void ActorConeXZ(GameObject actor, float radius, float startRads, float endRads, Vector4 color, bool lines = true)
+    internal static void ActorConeXZ(IGameObject actor, float radius, float startRads, float endRads, Vector4 color, bool lines = true)
     {
         ConeXZ(actor.Position, radius, startRads + actor.Rotation, endRads + actor.Rotation, color, lines);
     }

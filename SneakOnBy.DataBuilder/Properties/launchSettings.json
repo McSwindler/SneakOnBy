@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SneakOnBy.DataBuilder": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Program Files (x86)\\SquareEnix\\FINAL FANTASY XIV - A Realm Reborn\\game\\sqpack\" ..\\compendium",
+      "workingDirectory": "C:\\Users\\James\\git\\SneakOnBy"
+    }
+  }
+}

@@ -22,18 +22,9 @@ namespace SneakOnBy
         public Vector4 UnknownColorFront { get; set; } = ImGuiColors.DalamudGrey.WithW(0.2f);
         public Vector4 UnknownColorBack { get; set; } = ImGuiColors.DalamudGrey3.WithW(0.2f);
 
-        // the below exist just to make saving less cumbersome
-        [NonSerialized]
-        private DalamudPluginInterface? PluginInterface;
-
-        public void Initialize(DalamudPluginInterface pluginInterface)
-        {
-            this.PluginInterface = pluginInterface;
-        }
-
         public void Save()
         {
-            this.PluginInterface!.SavePluginConfig(this);
+            Services.PluginInterface!.SavePluginConfig(this);
         }
     }
 }

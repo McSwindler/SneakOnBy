@@ -1,4 +1,4 @@
-﻿namespace ECommons.MathHelpers;
+namespace ECommons.MathHelpers;
 
 public enum CardinalDirection
 {

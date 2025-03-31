@@ -3,9 +3,9 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Interface.Windowing;
 using SneakOnBy.Windows;
-using ECommons;
 using Dalamud.Plugin.Services;
-using ECommons.Reflection;
+using SneakOnBy.Storage;
+using System.Threading.Tasks;
 
 namespace SneakOnBy
 {
@@ -16,30 +16,30 @@ namespace SneakOnBy
 
         public static IDalamudPlugin Instance;
 
-        private DalamudPluginInterface PluginInterface { get; init; }
+        private IDalamudPluginInterface PluginInterface { get; init; }
         private ICommandManager CommandManager { get; init; }
         public Configuration Configuration { get; init; }
+        public static StorageManager StorageManager = null!;
         public WindowSystem WindowSystem = new("SneakOnBy");
 
         private ConfigWindow ConfigWindow { get; init; }
         private Canvas Canvas { get; init; }
 
         public Plugin(
-            [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface,
-            [RequiredVersion("1.0")] ICommandManager commandManager)
+            IDalamudPluginInterface pluginInterface,
+            ICommandManager commandManager)
         {
 
             Instance = this;
             this.PluginInterface = pluginInterface;
             this.CommandManager = commandManager;
 
-            Services.Initialize(pluginInterface);
-            //ECommonsMain.Init(pluginInterface, this, Module.DalamudReflector, Module.ObjectFunctions);
+            pluginInterface.Create<Services>();
 
-            this.Configuration = this.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
-            this.Configuration.Initialize(this.PluginInterface);
+            Configuration = Services.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
-            // you might normally want to embed resources and load them from the manifest stream
+            StorageManager = new StorageManager();
+            Task.Run(StorageManager.Load);
 
             ConfigWindow = new ConfigWindow(this);
             Canvas = new Canvas(this);
@@ -55,8 +55,6 @@ namespace SneakOnBy
             this.PluginInterface.UiBuilder.Draw += DrawUI;
             this.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
 
-            DalamudReflector.Init();
-
 
         }
 
@@ -71,8 +69,6 @@ namespace SneakOnBy
             Canvas.Dispose();
             
             this.CommandManager.RemoveHandler(CommandName);
-
-            DalamudReflector.Dispose();
         }
 
         private void OnCommand(string command, string args)
