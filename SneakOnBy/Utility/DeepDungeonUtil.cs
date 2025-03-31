@@ -1,6 +1,6 @@
 using FFXIVClientStructs.FFXIV.Client.Game.Event;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using SneakOnBy.Storage;
 using System;
 using System.Collections.Generic;
@@ -44,9 +44,9 @@ namespace SneakOnBy.Utility
             {
                 return territoryInfo switch
                 {
-                    { TerritoryIntendedUse: 31, ExVersion.Row: 0 or 1 } => DeepDungeonType.PalaceOfTheDead,
-                    { TerritoryIntendedUse: 31, ExVersion.Row: 2 } => DeepDungeonType.HeavenOnHigh,
-                    { TerritoryIntendedUse: 31, ExVersion.Row: 4 } => DeepDungeonType.EurekaOrthos,
+                    { TerritoryIntendedUse.RowId: 31, ExVersion.RowId: 0 or 1 } => DeepDungeonType.PalaceOfTheDead,
+                    { TerritoryIntendedUse.RowId: 31, ExVersion.RowId: 2 } => DeepDungeonType.HeavenOnHigh,
+                    { TerritoryIntendedUse.RowId: 31, ExVersion.RowId: 4 } => DeepDungeonType.EurekaOrthos,
                     _ => null
                 };
             }

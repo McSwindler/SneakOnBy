@@ -3,9 +3,9 @@ using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Lumina;
-using Lumina.Excel.GeneratedSheets2;
+using Lumina.Excel.Sheets;
 using YamlDotNet.RepresentationModel;
-using Action = Lumina.Excel.GeneratedSheets2.Action;
+using Action = Lumina.Excel.Sheets.Action;
 
 namespace SneakOnBy.DataBuilder
 {

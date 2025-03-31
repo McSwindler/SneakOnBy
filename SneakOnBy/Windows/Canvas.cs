@@ -8,7 +8,7 @@ using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Interface.Utility;
 using static SneakOnBy.Storage.StorageManager;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using SneakOnBy.Utility;
 using SneakOnBy.Storage;
 using System.Linq;
