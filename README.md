@@ -4,7 +4,7 @@ Paints the aggression zones around monsters in Deep Dungeons. Supports proximity
 
 ## Usage
 
-Install with custom repo `https://raw.githubusercontent.com/McSwindler/SneakOnBy/main/repo.json`
+Install with custom repo `https://raw.githubusercontent.com/McSwindler/SneakOnBy/master/repo.json`
 
 Use command `/sneaky` to configure options.
 
